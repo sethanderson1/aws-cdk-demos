@@ -1,0 +1,17 @@
+<Context crossContext="true">
+
+	<!--Resource
+		name="jdbc/LiferayPool"
+		auth="Container"
+		type="javax.sql.DataSource"
+		username="C##LIFERAY"
+		password="liferay"
+		driverClassName="oracle.jdbc.OracleDriver"
+		url="jdbc:oracle:thin:@192.168.1.84:1521:xe"
+		initialSize="10"
+		maxActive="50"
+		maxIdle="50"
+		validationQuery="select 1 from dual"
+	/-->
+
+</Context>
