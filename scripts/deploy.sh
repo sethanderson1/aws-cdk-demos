@@ -1,7 +1,7 @@
-#!/bin/zsh
+#!/bin/bash
 
 # Set env vars
-source ./setenv.sh
+. ./setenv.sh
 
 cd "$ROOT_DIR"
 
