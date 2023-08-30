@@ -1,6 +1,6 @@
-#!/bin/zsh
+#!/bin/bash
 
-source ./setenv.sh
+. ./setenv.sh
 
 cd $ROOT_DIR
 

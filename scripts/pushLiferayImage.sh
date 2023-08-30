@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 cd "$ROOT_DIR"
 

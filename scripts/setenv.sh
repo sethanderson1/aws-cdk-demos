@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 echo "Setting environment variables..."
 export AWS_PROFILE="pluralsight-sandbox"

@@ -1,16 +1,31 @@
-# Welcome to your CDK TypeScript project
-
-This is a blank project for CDK development with TypeScript.
-
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
-
-## Useful commands
-
-* `npm run build`   compile typescript to js
-* `npm run watch`   watch for changes and compile
-* `npm run test`    perform the jest unit tests
-* `cdk deploy`      deploy this stack to your default AWS account/region
-* `cdk diff`        compare deployed stack with current state
-* `cdk synth`       emits the synthesized CloudFormation template
 
 
+## Initial Setup
+
+### Configure AWS CLI
+
+If you're using the Pluralsight sandbox, you'll first need to configure your AWS CLI. Open your terminal and run:
+
+```bash
+aws configure --profile pluralsight-sandbox
+```
+
+and follow the prompts.
+
+### Edit scripts/setenv.sh
+
+Edit the ROOT_DIR in setenv.sh to represent the root directory of the project.
+
+## Deploy the stacks:
+Navigate to scripts dir
+```bash
+cd scripts
+```
+
+then 
+
+```bash
+. ./deploy.sh
+```
+
+This will create an ECR repo, build and push the apache and liferay images to it, then deploy an ecs cluster running those images.
