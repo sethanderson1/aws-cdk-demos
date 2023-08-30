@@ -2,7 +2,7 @@
 
 . ./setenv.sh
 
-cd $ROOT_DIR
+cd "$ROOT_DIR"
 
 echo "Starting cdk bootstrap..."
 cdk bootstrap
