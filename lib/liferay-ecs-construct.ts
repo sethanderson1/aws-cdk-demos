@@ -26,12 +26,12 @@ export class LiferayEcs extends Construct {
           containerName: "Liferay",
           enableLogging: true,
         },
-        publicLoadBalancer: true,
+        publicLoadBalancer: false,
       }
     );
 
     this.loadBalancerDnsName = service.loadBalancer.loadBalancerDnsName;
-    
+
     // Accessing the created target group
     const targetGroup = service.targetGroup as elbv2.ApplicationTargetGroup;
 
@@ -41,17 +41,18 @@ export class LiferayEcs extends Construct {
     });
 
 
-    // Create a policy statement
-    const policyStatement = new iam.PolicyStatement({
-      actions: [
-        "ecr:GetDownloadUrlForLayer",
-        "ecr:BatchCheckLayerAvailability",
-        "ecr:GetAuthorizationToken",
-      ],
-      resources: ["*"], // Adjust this to limit to specific resources if needed
-    });
+    // Uncomment below if useing ECR instead of Docker Hub
+    // // Create a policy statement
+    // const policyStatement = new iam.PolicyStatement({
+    //   actions: [
+    //     "ecr:GetDownloadUrlForLayer",
+    //     "ecr:BatchCheckLayerAvailability",
+    //     "ecr:GetAuthorizationToken",
+    //   ],
+    //   resources: ["*"], // Adjust this to limit to specific resources if needed
+    // });
 
-    // Add the policy statement to the execution role
-    service.taskDefinition.executionRole?.addToPrincipalPolicy(policyStatement);
+    // // Add the policy statement to the execution role
+    // service.taskDefinition.executionRole?.addToPrincipalPolicy(policyStatement);
   }
 }

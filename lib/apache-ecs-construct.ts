@@ -30,18 +30,18 @@ export class ApacheEcs extends Construct {
         publicLoadBalancer: true,
       }
     );
+    // Uncomment below if useing ECR instead of Docker Hub
+    // // Create a policy statement
+    // const policyStatement = new iam.PolicyStatement({
+    //   actions: [
+    //     "ecr:GetDownloadUrlForLayer",
+    //     "ecr:BatchCheckLayerAvailability",
+    //     "ecr:GetAuthorizationToken",
+    //   ],
+    //   resources: ["*"], // Adjust this to limit to specific resources if needed
+    // });
 
-    // Create a policy statement
-    const policyStatement = new iam.PolicyStatement({
-      actions: [
-        "ecr:GetDownloadUrlForLayer",
-        "ecr:BatchCheckLayerAvailability",
-        "ecr:GetAuthorizationToken",
-      ],
-      resources: ["*"], // Adjust this to limit to specific resources if needed
-    });
-
-    // Add the policy statement to the execution role
-    service.taskDefinition.executionRole?.addToPrincipalPolicy(policyStatement);
+    // // Add the policy statement to the execution role
+    // service.taskDefinition.executionRole?.addToPrincipalPolicy(policyStatement);
   }
 }
