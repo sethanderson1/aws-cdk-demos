@@ -6,8 +6,11 @@ import * as elbv2 from "aws-cdk-lib/aws-elasticloadbalancingv2"; // Import ELBv2
 import { Construct } from "constructs";
 
 export class LiferayEcs extends Construct {
+  public readonly loadBalancerDnsName: string;
+
   constructor(scope: Construct, id: string, image: ecs.ContainerImage) {
     super(scope, id);
+
 
     // Create ECS service using the provided image
     const service = new ecsp.ApplicationLoadBalancedFargateService(
@@ -27,6 +30,8 @@ export class LiferayEcs extends Construct {
       }
     );
 
+    this.loadBalancerDnsName = service.loadBalancer.loadBalancerDnsName;
+    
     // Accessing the created target group
     const targetGroup = service.targetGroup as elbv2.ApplicationTargetGroup;
 

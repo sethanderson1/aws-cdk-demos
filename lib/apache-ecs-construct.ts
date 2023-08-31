@@ -4,7 +4,7 @@ import * as ecsp from "aws-cdk-lib/aws-ecs-patterns";
 import { Construct } from "constructs";
 
 export class ApacheEcs extends Construct {
-  constructor(scope: Construct, id: string, image: ecs.ContainerImage) {
+  constructor(scope: Construct, id: string, image: ecs.ContainerImage, proxyPassHost: string) {
     super(scope, id);
 
     // Create ECS service using the provided image
@@ -20,6 +20,9 @@ export class ApacheEcs extends Construct {
           containerPort: 80,
           containerName: "Apache",
           enableLogging: true,
+          environment: {
+            PROXY_PASS_HOST: proxyPassHost
+          }
         },
         circuitBreaker: {
           rollback: true,
