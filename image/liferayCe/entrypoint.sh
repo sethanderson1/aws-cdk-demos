@@ -2,15 +2,36 @@
 
 set -o errexit
 
+initialize_database() {
+  echo "Initializing database..."
+  mysql -h $DB_HOST -u $DB_USERNAME -p$DB_PASSWORD <<MYSQL_SCRIPT
+  CREATE DATABASE IF NOT EXISTS liferay CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+  GRANT ALL PRIVILEGES ON liferay.* TO '$DB_USERNAME'@'%';
+  FLUSH PRIVILEGES;
+MYSQL_SCRIPT
+}
+
+prepare_liferay_jdbc_config() {
+  sed -i "s|DB_HOST_PLACEHOLDER|${DB_HOST}|g" $LIFERAY_HOME/portal-ext.properties
+  sed -i "s|DB_USERNAME_PLACEHOLDER|${DB_USERNAME}|g" $LIFERAY_HOME/portal-ext.properties
+  sed -i "s|DB_PASSWORD_PLACEHOLDER|${DB_PASSWORD}|g" $LIFERAY_HOME/portal-ext.properties
+}
+
 main() {
   show_motd
   prepare_liferay_portal_properties
+  prepare_liferay_jdbc_config
   prepare_liferay_tomcat_config
   prepare_liferay_deploy_directory
   prepare_liferay_osgi_configs_directory
+  # Initialize database before starting the portal
+  initialize_database
+
   echo "Start the portal... $@"
   run_portal "$@"
 }
+
+
 
 show_motd() {
   echo "Starting Liferay 7.4 CE instance.

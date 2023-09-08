@@ -1,0 +1,43 @@
+version: '3'
+services:
+  mysql-container:
+    image: dockerwhale987/mysql:8.0-plain
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      # MYSQL_DATABASE: liferay
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+    ports:
+      - "3306:3306"
+    networks:
+      - liferay_demo_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "admin", "--password=admin"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  liferay-container:
+    image: dockerwhale987/liferay-ce:liferay-7.4.3.u88-dynamic-mysql3
+    depends_on:
+      mysql-container:
+        condition: service_healthy
+    environment:
+      DB_HOST: mysql-container
+      DB_USERNAME: admin
+      DB_PASSWORD: admin
+    ports:
+      - "8080:8080"
+    networks:
+      - liferay_demo_network
+
+  apache-container:
+    image: dockerwhale987/apache:2-with-dynamic-proxypass
+    ports:
+      - "80:80"
+    networks:
+      - liferay_demo_network
+
+networks:
+  liferay_demo_network:
+    driver: bridge

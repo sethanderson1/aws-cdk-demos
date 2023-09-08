@@ -27,7 +27,8 @@ RUN apt-get update && \
         net-tools \
         procps \
         gnupg \
-        tree
+        tree \ 
+        mysql-client
 
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 
