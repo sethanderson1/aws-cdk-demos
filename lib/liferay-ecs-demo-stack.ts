@@ -32,9 +32,9 @@ export class LiferayEcsDemoStack extends cdk.Stack {
       allowAllOutbound: true,
     });
 
-    // Allow connections to RDS from ECS tasks
+    // Allow connections to RDS from anywhere
     rdsSecurityGroup.addIngressRule(
-      ec2.Peer.ipv4(vpc.vpcCidrBlock),
+      ec2.Peer.anyIpv4(),
       ec2.Port.tcp(3306)
     );
 
@@ -45,6 +45,10 @@ export class LiferayEcsDemoStack extends cdk.Stack {
       }),
       credentials: rds.Credentials.fromSecret(secret), // Use the secret for credentials
       vpc,
+      vpcSubnets: {
+        subnetType: ec2.SubnetType.PUBLIC,
+      },
+      publiclyAccessible: true,
       securityGroups: [rdsSecurityGroup],
     });
 
